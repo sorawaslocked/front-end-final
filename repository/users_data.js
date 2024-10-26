@@ -4,6 +4,6 @@ const USERS_FROM_DB = [
         name: "admin",
         email: "admin@mail.com",
         phone: "77777777777",
-        password: "admin"
+        password: "admin",
     }
 ];
