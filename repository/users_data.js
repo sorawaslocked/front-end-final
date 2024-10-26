@@ -12,6 +12,7 @@ const USERS_FROM_DB = [
         name: "Нургиса", 
         email: "142123@astanait.com", 
         phone: "+7 (777) 777-77-77", 
+        password: "111",
         address: "Сауран 14" 
     },
 ];

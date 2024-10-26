@@ -2,7 +2,7 @@ function loadHeader() {
   const headerHTML = `
   <header class="navbar navbar-expand-lg py-2 px-xl-5 sticky-top">
     <div class="container-fluid mx-xl-5">
-      <div class="d-none d-lg-flex justify-content-between align-items-center w-100">
+      <div id="show-on-large" class="justify-content-between align-items-center w-100">
         <a class="navbar-brand nav-link foodmart-logo" href="index.html">FoodMart</a>
         <div id="header-actions" class="d-flex align-items-center">
           <div class="dropdown category-dropdown me-2">
@@ -10,16 +10,7 @@ function loadHeader() {
               Категории
             </button>
             <ul class="dropdown-menu dropdown-menu-lg-end category-dropdown-menu me-auto mb-2 mb-lg-0" aria-labelledby="categoryDropdownMenuLink">
-              <li><a class="dropdown-item" href="fruits-berries.html">Фрукты, ягоды</a></li>
-              <li><a class="dropdown-item" href="vegetables-herbs.html">Овощи, зелень</a></li>
-              <li><a class="dropdown-item" href="dairy-eggs.html">Молочные продукты, яйца</a></li>
-              <li><a class="dropdown-item" href="meat-poultry.html">Мясо, птица</a></li>
-              <li><a class="dropdown-item" href="fish-seafood.html">Рыба, морепродукты</a></li>
-              <li><a class="dropdown-item" href="grain-pasta.html">Крупы, макароны</a></li>
-              <li><a class="dropdown-item" href="bread-baked.html">Хлеб, выпечка</a></li>
-              <li><a class="dropdown-item" href="candies-cookies-snacks.html">Конфеты, печенье, снеки</a></li>
-              <li><a class="dropdown-item" href="drinks.html">Соки, напитки</a></li>
-              <li><a class="dropdown-item" href="tea-coffee.html">Чай, кофе</a></li>
+              ${generateCategoryItems()}
             </ul>
           </div>
           <form class="d-flex mx-3" role="search">
@@ -40,45 +31,62 @@ function loadHeader() {
                   <span class="button-text">Корзина</span>
                 </button>
                 <div class="dropdown-menu dropdown-cart">
-                  <table class="table-sm table-hover">
-                    <tr>
-                      <td class="text-short">
-                        <img src="images/drinks/actual_peach_passionfruit.jpg" class="cart-min-img" alt="">
-                        Актуаль Персик Маракуйя 1л
-                      </td>
-                      <td>10шт</td>
-                    </tr>
-                    <tr>
-                      <td class="text-short">
-                        <img src="images/lays_chili_lime.jpg" class="cart-min-img" alt="">
-                        Lays Чили Лайм 200г
-                      </td>
-                      <td>5шт</td>
-                    </tr>
-                    <tr>
-                      <td class="text-short">
-                        <img src="images/fruits-berries/tashkent_lemon.png" class="cart-min-img" alt="">
-                        Ташкентские Лимоны
-                      </td>
-                      <td>2шт</td>
-                    </tr>
-                  </table>
-                  <hr class="dropdown-divider">
-                  <a href="cart.html" class="button-cart">
-                    <button class="btn btn-success border-2">Вся корзина</button>
-                  </a>
+                  ${generateCartItems()}
                 </div>
               </div>
             </li>
             <li class="nav-item">
-              <a href="profile.html">
-                <button class="btn btn-success border-2 rounded-4"><i class="bi bi-person me-2"></i><span class="button-text">Профиль</span></button>
-              </a>
+                <button id="profileButton" class="btn btn-success border-2 rounded-4"><i class="bi bi-person me-2"></i><span class="button-text">Профиль</span></button>
+                <div id="loginRegisterModal1" class="modal">
+                    <div class="modal-content">
+                        <span class="close1">&times;</span>
+                        <div class="tab">
+                            <button id="loginTab1" class="tablinks active">Sign in</button>
+                            <button id="registerTab1" class="tablinks">New account</button>
+                        </div>
+                        <!-- Login Form -->
+                        <form id="loginForm1" class="tabcontent">
+                            <div class="input-container">
+                                <input type="email" id="loginEmail" placeholder="E-mail" required>
+                            </div>
+                            <div class="input-container">
+                                <input type="password" id="loginPassword" placeholder="Password" required>
+                                <span class="toggle-password1">Hide</span>
+                            </div>
+                            <div class="remember-me">
+                                <input type="checkbox" id="rememberMe">
+                                <label for="rememberMe">Remember me</label>
+                            </div>
+                            <button type="submit" class="submit-btn">Login</button>
+                        </form>
+                        <!-- Registration Form -->
+                        <form id="registerForm1" class="tabcontent" style="display:none">
+                            <div class="input-container">
+                                <input type="text" id="regName" placeholder="Full name" required>
+                            </div>
+                            <div class="input-container">
+                                <input type="email" id="regEmail" placeholder="E-mail" required>
+                            </div>
+                            <div class="input-container">
+                                <input type="password" id="regPassword" placeholder="Password" required>
+                                <span class="toggle-password1">Hide</span>
+                            </div>
+                            <div class="input-container">
+                                <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
+                                <span class="toggle-password1">Hide</span>
+                            </div>
+                            <div class="input-container">
+                                <input type="tel" id="regPhone" placeholder="Phone (optional)">
+                            </div>
+                            <button type="submit" class="submit-btn">Register</button>
+                        </form>
+                    </div>
+                </div>
             </li>
           </ul>
         </div>
       </div>
-      <div class="d-flex d-lg-none justify-content-between align-items-center w-100">
+      <div id="show-on-small" class=" justify-content-between align-items-center w-100">
         <a class="navbar-brand nav-link foodmart-logo" href="index.html">FoodMart</a>
         <div id="header-actions" class="d-flex align-items-center gap-2">
           <a href="liked.html" class="nav-link">
@@ -87,56 +95,64 @@ function loadHeader() {
           <div class="dropdown">
             <button class="btn btn-success border-2 rounded-4 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-basket"></i></button>
             <div class="dropdown-menu dropdown-cart">
-                  <table class="table-sm table-hover">
-                    <tr>
-                      <td class="text-short">
-                        <img src="images/drinks/actual_peach_passionfruit.jpg" class="cart-min-img" alt="">
-                        Актуаль Персик Маракуйя 1л
-                      </td>
-                      <td>10шт</td>
-                    </tr>
-                    <tr>
-                      <td class="text-short">
-                        <img src="images/lays_chili_lime.jpg" class="cart-min-img" alt="">
-                        Lays Чили Лайм 200г
-                      </td>
-                      <td>5шт</td>
-                    </tr>
-                    <tr>
-                      <td class="text-short">
-                        <img src="images/fruits-berries/tashkent_lemon.png" class="cart-min-img" alt="">
-                        Ташкентские Лимоны
-                      </td>
-                      <td>2шт</td>
-                    </tr>
-                  </table>
-                  <hr class="dropdown-divider">
-                  <a href="cart.html" class="button-cart">
-                    <button class="btn btn-success border-2">Вся корзина</button>
-                  </a>
-                </div>
+               ${generateCartItems()}   
+            </div>
           </div>
-          <a href="profile.html" class="nav-link">
-            <button class="btn btn-success border-2 rounded-4"><i class="bi bi-person"></i></button>
-          </a>
+            <button id="profileButtonMobile" class="btn btn-success border-2 rounded-4"><i class="bi bi-person"></i></button>
+            <div id="loginRegisterModal" class="modal">
+            <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div class="tab">
+                        <button id="loginTab" class="tablinks active">Sign in</button>
+                        <button id="registerTab" class="tablinks">New account</button>
+                    </div>
+                    <!-- Login Form -->
+                    <form id="loginForm" class="tabcontent">
+                        <div class="input-container">
+                            <input type="email" id="loginEmail" placeholder="E-mail" required>
+                        </div>
+                        <div class="input-container">
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                            <span class="toggle-password">Hide</span>
+                        </div>
+                        <div class="remember-me">
+                            <input type="checkbox" id="rememberMe">
+                            <label for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="submit-btn">Login</button>
+                    </form>
+                    <!-- Registration Form -->
+                    <form id="registerForm" class="tabcontent" style="display:none">
+                        <div class="input-container">
+                            <input type="text" id="regName" placeholder="Full name" required>
+                        </div>
+                        <div class="input-container">
+                            <input type="email" id="regEmail" placeholder="E-mail" required>
+                        </div>
+                        <div class="input-container">
+                            <input type="password" id="regPassword" placeholder="Password" required>
+                            <span class="toggle-password">Hide</span>
+                        </div>
+                        <div class="input-container">
+                            <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
+                            <span class="toggle-password">Hide</span>
+                        </div>
+                        <div class="input-container">
+                            <input type="tel" id="regPhone" placeholder="Phone (optional)">
+                        </div>
+                        <button type="submit" class="submit-btn">Register</button>
+                    </form>
+                </div>
+            </div>
         </div>
       </div>
-      <div id="header-search" class="d-flex d-lg-none">
+      <div id="show-on-small" class="d-flex">
         <div class="dropdown category-dropdown me-2">
           <button id="categoryDropdownMenuLink" class="btn btn-light dropdown-toggle border-black border-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Категории
           </button>
           <ul class="dropdown-menu dropdown-menu-lg-end category-dropdown-menu me-auto mb-2 mb-lg-0" aria-labelledby="categoryDropdownMenuLink">
-            <li><a class="dropdown-item" href="fruits-berries.html">Фрукты, ягоды</a></li>
-            <li><a class="dropdown-item" href="vegetables-herbs.html">Овощи, зелень</a></li>
-            <li><a class="dropdown-item" href="dairy-eggs.html">Молочные продукты, яйца</a></li>
-            <li><a class="dropdown-item" href="meat-poultry.html">Мясо, птица</a></li>
-            <li><a class="dropdown-item" href="fish-seafood.html">Рыба, морепродукты</a></li>
-            <li><a class="dropdown-item" href="grain-pasta.html">Крупы, макароны</a></li>
-            <li><a class="dropdown-item" href="bread-baked.html">Хлеб, выпечка</a></li>
-            <li><a class="dropdown-item" href="candies-cookies-snacks.html">Конфеты, печенье, снеки</a></li>
-            <li><a class="dropdown-item" href="drinks.html">Соки, напитки</a></li>
-            <li><a class="dropdown-item" href="tea-coffee.html">Чай, кофе</a></li>
+            ${generateCategoryItems()}
           </ul>
         </div>
         <form class="d-flex" role="search">
@@ -146,7 +162,6 @@ function loadHeader() {
       </div>
     </div>
   </header>
-
   `;
   document.getElementById('header-container').innerHTML = headerHTML;
 }
