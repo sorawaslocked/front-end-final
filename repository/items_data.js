@@ -1,4 +1,4 @@
-const itemsFromDb = [
+const ITEMS_FROM_DB = [
     {
         id: 1,
         description: "Чипсы Lays Чили и лайм 200г",

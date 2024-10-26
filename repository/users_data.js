@@ -1,4 +1,4 @@
-const usersFromDb = [
+const USERS_FROM_DB = [
     {
         id: 1,
         name: "admin",

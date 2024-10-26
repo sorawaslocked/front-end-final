@@ -1,6 +1,6 @@
-const db = {
+const DB = {
     users: {
-        data: usersFromDb,
+        data: USERS_FROM_DB,
         getAllUsers: () => {
             return this.data
         },
@@ -19,7 +19,7 @@ const db = {
     },
 
     items: {
-        data: itemsFromDb,
+        data: ITEMS_FROM_DB,
 
         getById: (id) => {
             return this.data.find(item => item.id == id)
