@@ -1,4 +1,4 @@
-const DB = {
+const fakeDb = {
     users: {
         data: USERS_FROM_DB,
         
