@@ -1,6 +1,7 @@
 const DB = {
     users: {
         data: USERS_FROM_DB,
+        
         getAllUsers: function() {
             return this.data;
         },
@@ -31,6 +32,10 @@ const DB = {
 
         getAllWithSales: function() {
             return this.data.filter(item => item.discountPercent > 0);
+        },
+
+        getAllByIds: function(ids) {
+            return ids.map(id => this.getById(id)).filter(item => item !== undefined);
         }
     },
 
