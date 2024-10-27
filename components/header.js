@@ -37,51 +37,6 @@ function loadHeader() {
             </li>
             <li class="nav-item">
                 <button id="profileButton" class="btn btn-success border-2 rounded-4"><i class="bi bi-person me-2"></i><span class="button-text">Профиль</span></button>
-                <div id="loginRegisterModal1" class="modal">
-                    <div class="modal-content">
-                        <span class="close1">&times;</span>
-                        <div class="tab">
-                            <button id="loginTab1" class="tablinks active">Sign in</button>
-                            <button id="registerTab1" class="tablinks">New account</button>
-                        </div>
-                        <!-- Login Form -->
-                        <form id="loginForm1" class="tabcontent">
-                            <div class="input-container">
-                                <input type="email" id="loginEmail1" placeholder="E-mail" required>
-                            </div>
-                            <div class="input-container">
-                                <input type="password" id="loginPassword1" placeholder="Password" required>
-                                <span class="toggle-password1">Hide</span>
-                            </div>
-                            <div class="remember-me">
-                                <input type="checkbox" id="rememberMe">
-                                <label for="rememberMe">Remember me</label>
-                            </div>
-                            <button type="submit" class="submit-btn">Login</button>
-                        </form>
-                        <!-- Registration Form -->
-                        <form id="registerForm1" class="tabcontent" style="display:none">
-                            <div class="input-container">
-                                <input type="text" id="regName" placeholder="Full name" required>
-                            </div>
-                            <div class="input-container">
-                                <input type="email" id="regEmail" placeholder="E-mail" required>
-                            </div>
-                            <div class="input-container">
-                                <input type="password" id="regPassword" placeholder="Password" required>
-                                <span class="toggle-password1">Hide</span>
-                            </div>
-                            <div class="input-container">
-                                <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
-                                <span class="toggle-password1">Hide</span>
-                            </div>
-                            <div class="input-container">
-                                <input type="tel" id="regPhone" placeholder="Phone (optional)">
-                            </div>
-                            <button type="submit" class="submit-btn">Register</button>
-                        </form>
-                    </div>
-                </div>
             </li>
           </ul>
         </div>
@@ -98,52 +53,7 @@ function loadHeader() {
                ${generateCartItems()}   
             </div>
           </div>
-            <button id="profileButtonMobile" class="btn btn-success border-2 rounded-4"><i class="bi bi-person"></i></button>
-            <div id="loginRegisterModal" class="modal">
-            <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <div class="tab">
-                        <button id="loginTab" class="tablinks active">Sign in</button>
-                        <button id="registerTab" class="tablinks">New account</button>
-                    </div>
-                    <!-- Login Form -->
-                    <form id="loginForm" class="tabcontent">
-                        <div class="input-container">
-                            <input type="email" id="loginEmail" placeholder="E-mail" required>
-                        </div>
-                        <div class="input-container">
-                            <input type="password" id="loginPassword" placeholder="Password" required>
-                            <span class="toggle-password">Hide</span>
-                        </div>
-                        <div class="remember-me">
-                            <input type="checkbox" id="rememberMe">
-                            <label for="rememberMe">Remember me</label>
-                        </div>
-                        <button type="submit" class="submit-btn">Login</button>
-                    </form>
-                    <!-- Registration Form -->
-                    <form id="registerForm" class="tabcontent" style="display:none">
-                        <div class="input-container">
-                            <input type="text" id="regName" placeholder="Full name" required>
-                        </div>
-                        <div class="input-container">
-                            <input type="email" id="regEmail" placeholder="E-mail" required>
-                        </div>
-                        <div class="input-container">
-                            <input type="password" id="regPassword" placeholder="Password" required>
-                            <span class="toggle-password">Hide</span>
-                        </div>
-                        <div class="input-container">
-                            <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
-                            <span class="toggle-password">Hide</span>
-                        </div>
-                        <div class="input-container">
-                            <input type="tel" id="regPhone" placeholder="Phone (optional)">
-                        </div>
-                        <button type="submit" class="submit-btn">Register</button>
-                    </form>
-                </div>
-            </div>
+            <button id="mobileProfile" class="btn btn-success border-2 rounded-4"><i class="bi bi-person"></i></button>
         </div>
       </div>
       <div id="show-on-small" class="d-flex">
