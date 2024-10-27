@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <script src="gen-metadata.js"></script>
+  <script src="repository/users_data.js"></script>
+  <script src="repository/items_data.js"></script>
+  <script src="repository/orders_data.js"></script>
+  <script src="repository/DB.js"></script>
+  <script src="main.js"></script>
+  <link rel="stylesheet" href="styles/item_card.css">
+</head>
+<body>
+
+<div id="header-container"></div>
+
+<main>
+  <div class="container my-5">
+    <!-- Category Header -->
+    <div class="row mb-4">
+      <div class="col">
+        <h3 id="category-name"></h3>
+      </div>
+    </div>
+
+    <!-- Items Grid -->
+    <div id="item-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+    </div>
+  </div>
+</main>
+
+<div id="footer-container"></div>
+
+<script src="components/cart_items.js"></script>
+<script src="components/category_items.js"></script>
+<script src="components/header.js"></script>
+<script src="components/footer.js"></script>
+<script src="components/item_card.js"></script>
+<script src="category.js"></script>
+
+</body>
+</html>
