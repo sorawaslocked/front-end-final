@@ -30,3 +30,8 @@ let customStylesheet = document.createElement('link');
 customStylesheet.href = 'styles/main.css';
 customStylesheet.rel = 'stylesheet';
 document.head.appendChild(customStylesheet);
+
+let customStylesheet2 = document.createElement('link');
+customStylesheet2.href = 'styles/auth.css';
+customStylesheet2.rel = 'stylesheet';
+document.head.appendChild(customStylesheet2);
