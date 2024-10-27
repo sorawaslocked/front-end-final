@@ -1,7 +1,7 @@
 function createItemCard(item) {
   // Create card container
   const colDiv = document.createElement("div");
-  colDiv.className = "col";
+  colDiv.className = "col d-flex justify-content-center";
 
   const cardDiv = document.createElement("div");
   cardDiv.className = "card h-100";
@@ -10,6 +10,9 @@ function createItemCard(item) {
   const img = document.createElement("img");
   img.className = "card-img-top";
   img.src = item.imageUrl;
+  img.style.width = "100%";
+  img.style.height = "200px"; // Fixed height for uniformity
+  img.style.objectFit = "cover"; // Ensures image fills the container without distortion
   cardDiv.appendChild(img);
 
   // Create card body
@@ -53,18 +56,18 @@ function createItemCard(item) {
       const originalPrice = document.createElement("span");
       originalPrice.className = "original-price";
 
-      originalPrice.textContent = `${item.price.toFixed(2)} ₸ ${quantityEnding}`;
+      originalPrice.textContent = `${item.price} ₸ ${quantityEnding}`;
       priceContainer.appendChild(originalPrice);
 
       const discountedPrice = document.createElement("p");
       discountedPrice.className = "fw-bold mb-0";
       const discountedAmount = item.price * (1 - item.discountPercent / 100);
-      discountedPrice.textContent = `${discountedAmount.toFixed(2)} ₸ ${quantityEnding}`;
+      discountedPrice.textContent = `${discountedAmount} ₸ ${quantityEnding}`;
       priceContainer.appendChild(discountedPrice);
   } else {
       const regularPrice = document.createElement("p");
       regularPrice.className = "fw-bold mb-0";
-      regularPrice.textContent = `${item.price.toFixed(2)} ₸ ${quantityEnding}`;
+      regularPrice.textContent = `${item.price} ₸ ${quantityEnding}`;
       priceContainer.appendChild(regularPrice);
   }
 
