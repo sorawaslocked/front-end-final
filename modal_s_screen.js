@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const profileButtonMobile = document.getElementById('profileButtonMobile');
     const loginRegisterModal = document.getElementById('loginRegisterModal');
     const closeButton = document.querySelector('.close');
     const loginTab = document.getElementById('loginTab');
@@ -61,10 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Login Form Submission
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        console.log(fakeDb.users.getAllUsers());
         const userEMAIL = document.getElementById('loginEmail').value;
-        const password = document.getElementById('password').value;
+        const password = document.getElementById('loginPassword').value;
         // Проверяем пользователя в базе данных
-        const user = DB.users.getAllUsers().find(user => user.email === userEMAIL && user.password === password);
+        const user = fakeDb.users.getAllUsers().find(user => user.email === userEMAIL && user.password === password);
         if (user) {
             sessionStorage.setItem('loggedId', user.id);
             loginRegisterModal.style.display = 'none';

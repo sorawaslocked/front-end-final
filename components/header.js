@@ -47,10 +47,10 @@ function loadHeader() {
                         <!-- Login Form -->
                         <form id="loginForm1" class="tabcontent">
                             <div class="input-container">
-                                <input type="email" id="loginEmail" placeholder="E-mail" required>
+                                <input type="email" id="loginEmail1" placeholder="E-mail" required>
                             </div>
                             <div class="input-container">
-                                <input type="password" id="loginPassword" placeholder="Password" required>
+                                <input type="password" id="loginPassword1" placeholder="Password" required>
                                 <span class="toggle-password1">Hide</span>
                             </div>
                             <div class="remember-me">

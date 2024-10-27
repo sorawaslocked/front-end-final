@@ -199,6 +199,14 @@ footer {
     cursor: pointer;
 }
 
+.close1 {
+  position: absolute;
+  top: 1px;
+  right: 5px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
 .tab {
     display: flex;
     border-bottom: 1px solid #ddd;

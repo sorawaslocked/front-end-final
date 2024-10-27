@@ -59,11 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Login Form Submission
   loginForm1.addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
+      const email = document.getElementById('loginEmail1').value;
+      const password = document.getElementById('loginPassword1').value;
 
       // Check user in the database
-      const user = DB.users.getAllUsers().find(user => user.email === email && user.password === password);
+      const user = fakeDb.users.getAllUsers().find(user => user.email === email && user.password === password);
       if (user) {
           sessionStorage.setItem('loggedId', user.id);
           loginRegisterModal1.style.display = 'none';
