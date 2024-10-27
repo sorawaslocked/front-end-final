@@ -1,4 +1,4 @@
-const fakeDb = {
+const DB = {
     users: {
         data: USERS_FROM_DB,
         
@@ -36,6 +36,12 @@ const fakeDb = {
 
         getAllByIds: function(ids) {
             return ids.map(id => this.getById(id)).filter(item => item !== undefined);
+        },
+
+        getCategoryName: function(categorySimple) {
+            let item = this.data.find(item => item.category.simple === categorySimple);
+
+            return item.category.full;
         }
     },
 

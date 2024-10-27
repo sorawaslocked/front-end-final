@@ -11,6 +11,7 @@ const ITEMS_FROM_DB = [
             simple: "snacks",
             full: "Конфеты, печенье, снэки"
         },
-        discountPercent: 0
+        discountPercent: 10,
+        imageUrl: ""
     }
 ];

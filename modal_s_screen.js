@@ -62,11 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Login Form Submission
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        console.log(fakeDb.users.getAllUsers());
+        console.log(DB.users.getAllUsers());
         const userEMAIL = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
         // Проверяем пользователя в базе данных
-        const user = fakeDb.users.getAllUsers().find(user => user.email === userEMAIL && user.password === password);
+        const user = DB.users.getAllUsers().find(user => user.email === userEMAIL && user.password === password);
         if (user) {
             sessionStorage.setItem('loggedId', user.id);
             loginRegisterModal.style.display = 'none';
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
         // Создаем нового пользователя
         const newUser = {
-            id: fakeDb.users.data.length + 1, // Генерируем новый ID
+            id: DB.users.data.length + 1, // Генерируем новый ID
             name: regName,
             email: regEmail,
             phone: regPhone,
@@ -100,8 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
   
         // Добавляем нового пользователя в базу данных
-        fakeDb.users.addUser(newUser);
-        console.log(fakeDb.getAllUsers);
+        DB.users.addUser(newUser);
+        console.log(DB.getAllUsers);
         
         // Сохраняем ID нового пользователя в сессии и перенаправляем на профиль
         sessionStorage.setItem('loggedId', newUser.id);

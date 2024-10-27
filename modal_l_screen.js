@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const password = document.getElementById('loginPassword1').value;
 
       // Check user in the database
-      const user = fakeDb.users.getAllUsers().find(user => user.email === email && user.password === password);
+      const user = DB.users.getAllUsers().find(user => user.email === email && user.password === password);
       if (user) {
           sessionStorage.setItem('loggedId', user.id);
           loginRegisterModal1.style.display = 'none';
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Create new user
       const newUser = {
-          id: fakeDb.users.data.length + 1, // Generate new ID
+          id: DB.users.data.length + 1, // Generate new ID
           name: regName,
           email: regEmail,
           phone: regPhone,
@@ -97,8 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       // Add new user to the database
-      fakeDb.users.addUser(newUser);
-      console.log(fakeDb.getAllUsers);
+      DB.users.addUser(newUser);
+      console.log(DB.getAllUsers);
 
       // Save new user's ID in session and redirect to profile
       sessionStorage.setItem('loggedId', newUser.id);
