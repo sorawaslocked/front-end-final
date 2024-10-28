@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             DB.users.addUser(newUser);
             sessionStorage.setItem('loggedId', newUser.id);
-            localStorage.setItem('db', DB);
+            localStorage.setItem('db', JSON.stringify(DB));
             window.location.href = 'profile.html';
         });
     }
