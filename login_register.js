@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            const user = fakeDb.users.getAllUsers().find(user => user.email === email && user.password === password);
+            const user = USERS_FROM_DB.find(user => user.email === email && user.password === password);
             if (user) {
                 sessionStorage.setItem('loggedId', user.id);
                 window.location.href = 'profile.html';
