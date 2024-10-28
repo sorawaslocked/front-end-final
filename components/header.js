@@ -9,7 +9,7 @@ function loadHeader() {
             <button id="categoryDropdownMenuLink" class="btn btn-light dropdown-toggle border-black border-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Категории
             </button>
-            <ul class="dropdown-menu dropdown-menu-lg-end category-dropdown-menu me-auto mb-2 mb-lg-0" aria-labelledby="categoryDropdownMenuLink">
+            <ul id="caterogiry-dropdown" class="dropdown-menu dropdown-menu-lg-end category-dropdown-menu me-auto mb-2 mb-lg-0" aria-labelledby="categoryDropdownMenuLink">
               ${generateCategoryItems()}
             </ul>
           </div>
