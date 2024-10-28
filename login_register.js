@@ -52,15 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const newUser = {
-                id: fakeDb.users.data.length + 1,
+                id: DB.users.data.length + 1,
                 name,
                 email,
                 phone,
                 password,
             };
 
-            fakeDb.users.addUser(newUser);
+            DB.users.addUser(newUser);
             sessionStorage.setItem('loggedId', newUser.id);
+            localStorage.setItem('db', DB);
             window.location.href = 'profile.html';
         });
     }
