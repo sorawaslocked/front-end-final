@@ -1,0 +1,9 @@
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-buttons .btn {
+  width: 80px;
+}
