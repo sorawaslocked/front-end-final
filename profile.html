@@ -37,40 +37,46 @@
           <div class="card-body">
             <h5 class="mb-3">Личная Информация</h5>
             <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Имя</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0" id="user-name">Неизвестно</p>
-              </div>
+                <div class="col-sm-3">
+                    <p class="mb-0">Имя</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0" id="user-name">Неизвестно</p>
+                    <input type="text" id="edit-user-name" style="display: none;">
+                </div>
             </div>
             <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Электронная почта</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0" id="user-email">Неизвестно</p>
-              </div>
+                <div class="col-sm-3">
+                    <p class="mb-0">Электронная почта</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0" id="user-email">Неизвестно</p>
+                    <input type="email" id="edit-user-email" style="display: none;">
+                </div>
             </div>
             <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Мобильный телефон</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0" id="user-phone">Неизвестно</p>
-              </div>
+                <div class="col-sm-3">
+                    <p class="mb-0">Мобильный телефон</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0" id="user-phone">Неизвестно</p>
+                    <input type="tel" id="edit-user-phone" style="display: none;">
+                </div>
             </div>
             <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Адрес</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0" id="user-address">Неизвестно</p>
-              </div>
+                <div class="col-sm-3">
+                    <p class="mb-0">Адрес</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0" id="user-address">Неизвестно</p>
+                    <input type="text" id="edit-user-address" style="display: none;">
+                </div>
             </div>
             <hr>
             <button class="btn btn-danger"><i class="bi bi-box-arrow-left me-2"></i>Выйти</button>
-          </div>
+            <button class="btn btn-primary" id="edit-button">Редактировать</button>
+            <div id="admin-panel-container"></div>
+        </div>
         </div>
         <div class="card mb-4">
           <div class="card-body">
