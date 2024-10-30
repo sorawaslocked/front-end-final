@@ -1,5 +1,5 @@
 const tableBody = document.querySelector('table > tbody');
 
-DB.users.data.forEach(user => {
+DB.users.forEach(user => {
   tableBody.append(createUserRow(user));
 })
