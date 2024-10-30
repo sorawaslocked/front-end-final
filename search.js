@@ -6,7 +6,7 @@ const itemGrid = document.querySelector('#item-grid');
 
 searchQueryHeader.innerText = "Товары по поиску: " + searchQuery;
 
-const itemsForQuery = DB.items.data.filter(
+const itemsForQuery = DB.items.filter(
     i => i.description.toLowerCase().includes(searchQuery.toLowerCase()));
 
 itemsForQuery.forEach(item => {

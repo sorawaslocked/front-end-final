@@ -42,7 +42,7 @@ function createUserRow(user) {
   actionCell.appendChild(saveButton);
 
   saveButton.addEventListener("click", () => {
-    const userFromDb = DB.users.data.find(u => user.id === u.id);
+    const userFromDb = DB.users.find(u => user.id === u.id);
 
     const nameValue = nameCell.querySelector("input").value;
     const emailValue = emailCell.querySelector("input").value;
@@ -66,7 +66,7 @@ function createUserRow(user) {
   actionCell.appendChild(deleteButton);
 
   deleteButton.addEventListener("click", () => {
-    DB.users.data = DB.users.data.filter(u => u.id !== user.id);
+    DB.users = DB.users.filter(u => u.id !== user.id);
     localStorage.setItem('db', JSON.stringify(DB));
   })
 
