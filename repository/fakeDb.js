@@ -1,55 +1,39 @@
 const fakeDb = {
   users: {
-    data: USERS_FROM_DB,
-
     getAllUsers: function() {
-      return this.data;
+      return DB.users;
     },
-
     getById: function(id) {
-      return this.data.find(user => user.id == id);
+      return DB.users.find(user => user.id == id);
     },
-
     addUser: function(user) {
-      this.data.push(user);
+      DB.users.push(user);
     },
-
     deleteById: function(id) {
-      this.data = this.data.filter(user => user.id != id);
-    },
+      DB.users = DB.users.filter(user => user.id != id);
+    }
   },
-
   items: {
-    data: ITEMS_FROM_DB,
-
     getById: function(id) {
-      return this.data.find(item => item.id == id);
+      return DB.items.find(item => item.id == id);
     },
-
     getAllByCategory: function(categorySimple) {
-      return this.data.filter(item => item.category.simple == categorySimple);
+      return DB.items.filter(item => item.category.simple == categorySimple);
     },
-
     getAllWithSales: function() {
-      return this.data.filter(item => item.discountPercent > 0);
+      return DB.items.filter(item => item.discountPercent > 0);
     },
-
     getAllByIds: function(ids) {
       return ids.map(id => this.getById(id)).filter(item => item !== undefined);
     },
-
     getCategoryName: function(categorySimple) {
-      let item = this.data.find(item => item.category.simple === categorySimple);
-
-      return item.category.full;
+      let item = DB.items.find(item => item.category.simple === categorySimple);
+      return item ? item.category.full : null;
     }
   },
-
   orders: {
-    data: ORDERS_FROM_DB,
-
     getAllByUserId: function(userId) {
-      return this.data.filter(order => order.userId == userId);
+      return DB.orders.filter(order => order.userId == userId);
     }
   }
 };
