@@ -8,11 +8,11 @@ const USERS_FROM_DB = [
         address: "Улица Админа, 1"  // Добавили адрес
     },
     { 
-        id: 2, 
-        name: "Нургиса", 
-        email: "142123@astanait.com", 
-        phone: "+7 (777) 777-77-77", 
+        id: 2,
+        name: "Нургиса",
+        email: "142123@astanait.com",
+        phone: "+7 (777) 777-77-77",
         password: "111",
-        address: "Сауран 14" 
+        address: "Сауран 14"
     },
 ];

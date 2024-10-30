@@ -51,19 +51,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Создаем нового пользователя
             const newUser = {
-                id: DB.users.data.length + 1,
+                id: USERS_FROM_DB.length + 1,
                 name,
                 email,
                 phone,
                 password,
             };
 
-            DB.users.addUser(newUser);
+            // Добавляем пользователя в массив и обновляем localStorage
+            USERS_FROM_DB.push(newUser); 
+            const updatedDb = { users: { data: USERS_FROM_DB } };
+            localStorage.setItem('db', JSON.stringify(updatedDb));
+            
+            // Устанавливаем нового пользователя как текущего и перенаправляем на профиль
             sessionStorage.setItem('loggedId', newUser.id);
-            localStorage.setItem('db', JSON.stringify(DB));
             window.location.href = 'profile.html';
         });
     }
-  });
-  
+});
