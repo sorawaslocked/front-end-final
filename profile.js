@@ -2,10 +2,25 @@ const currentUser = DB.users.find(user => user.id === USER_LOGGED_IN);
 
 if (currentUser) {
   console.log("currentUser:", currentUser); // Проверяем данные пользователя
-  document.getElementById("user-name").innerText = currentUser.name || 'Не указано';
-  document.getElementById("user-email").innerText = currentUser.email || 'Не указано';
-  document.getElementById("user-phone").innerText = currentUser.phone || 'Не указано';
-  document.getElementById("user-address").innerText = currentUser.address || 'Не указано';
+  
+  // Загружаем данные пользователя из локального хранилища
+  loadUserData(currentUser);
+
+  // Проверяем, является ли пользователь администратором
+  if (currentUser.id === 1) {
+    // Создаем кнопку для перехода в панель администратора
+    const adminButton = document.createElement('button');
+    adminButton.innerText = "Перейти в панель администратора";
+    adminButton.className = "btn btn-warning"; // Добавляем стили для кнопки
+    adminButton.style.marginTop = '20px'; // Отступ сверху
+    adminButton.addEventListener("click", () => {
+      window.location.href = "admin_panel.html"; // Укажите путь к странице панели администратора
+    });
+
+    // Добавляем кнопку в контейнер
+    const adminPanelContainer = document.getElementById("admin-panel-container");
+    adminPanelContainer.appendChild(adminButton);
+  }
 
   // Получаем заказы текущего пользователя
   const userOrders = ORDERS_FROM_DB.filter(order => order.userId === currentUser.id);
@@ -40,18 +55,103 @@ if (currentUser) {
       orderList.removeChild(orderItems[i]);
     }
   }
+
+  // Событие для кнопки редактирования
+  const editButton = document.getElementById("edit-button");
+  editButton.addEventListener("click", () => {
+    const userName = document.getElementById("user-name");
+    const userEmail = document.getElementById("user-email");
+    const userPhone = document.getElementById("user-phone");
+    const userAddress = document.getElementById("user-address");
+
+    const editUserName = document.getElementById("edit-user-name");
+    const editUserEmail = document.getElementById("edit-user-email");
+    const editUserPhone = document.getElementById("edit-user-phone");
+    const editUserAddress = document.getElementById("edit-user-address");
+
+    if (editButton.innerText === "Редактировать") {
+      // Переключение на режим редактирования
+      userName.style.display = 'none';
+      userEmail.style.display = 'none';
+      userPhone.style.display = 'none';
+      userAddress.style.display = 'none';
+
+      editUserName.style.display = 'block';
+      editUserEmail.style.display = 'block';
+      editUserPhone.style.display = 'block';
+      editUserAddress.style.display = 'block';
+
+      editUserName.value = userName.innerText;
+      editUserEmail.value = userEmail.innerText;
+      editUserPhone.value = userPhone.innerText;
+      editUserAddress.value = userAddress.innerText;
+
+      editButton.innerText = "Сохранить";
+    } else {
+      // Сохранение изменений
+      userName.innerText = editUserName.value;
+      userEmail.innerText = editUserEmail.value;
+      userPhone.innerText = editUserPhone.value;
+      userAddress.innerText = editUserAddress.value;
+
+      // Сохраняем данные в локальное хранилище
+      const userData = {
+        id: currentUser.id, // Сохраняем ID пользователя
+        name: userName.innerText,
+        email: userEmail.innerText,
+        phone: userPhone.innerText,
+        address: userAddress.innerText
+      };
+      localStorage.setItem(`userData_${currentUser.id}`, JSON.stringify(userData)); // Используем ID пользователя как ключ
+
+      userName.style.display = 'block';
+      userEmail.style.display = 'block';
+      userPhone.style.display = 'block';
+      userAddress.style.display = 'block';
+
+      editUserName.style.display = 'none';
+      editUserEmail.style.display = 'none';
+      editUserPhone.style.display = 'none';
+      editUserAddress.style.display = 'none';
+
+      editButton.innerText = "Редактировать";
+    }
+  });
 } else {
   console.log("Пользователь не найден.");
+}
+
+// Функция для загрузки данных пользователя из локального хранилища
+function loadUserData(currentUser) {
+  const storedUserData = JSON.parse(localStorage.getItem(`userData_${currentUser.id}`)); // Используем ID пользователя как ключ
+  if (storedUserData) {
+    document.getElementById("user-name").innerText = storedUserData.name || currentUser.name || 'Не указано';
+    document.getElementById("user-email").innerText = storedUserData.email || currentUser.email || 'Не указано';
+    document.getElementById("user-phone").innerText = storedUserData.phone || currentUser.phone || 'Не указано';
+    document.getElementById("user-address").innerText = storedUserData.address || currentUser.address || 'Не указано';
+  } else {
+    document.getElementById("user-name").innerText = currentUser.name || 'Не указано';
+    document.getElementById("user-email").innerText = currentUser.email || 'Не указано';
+    document.getElementById("user-phone").innerText = currentUser.phone || 'Не указано';
+    document.getElementById("user-address").innerText = currentUser.address || 'Не указано';
+  }
 }
 
 const logoutButton = document.querySelector(".btn.btn-danger");
 if (logoutButton) {
   logoutButton.addEventListener("click", () => {
+    // Удаляем данные из локального хранилища при выходе
+    const storedUserData = JSON.parse(localStorage.getItem(`userData_${currentUser.id}`));
+    if (storedUserData) {
+      localStorage.removeItem(`userData_${currentUser.id}`); // Удаляем данные пользователя из локального хранилища
+    }
+    
     sessionStorage.removeItem('loggedId'); // Удаляем ID из sessionStorage
     window.location.href = "index.html"; // Перенаправляем на главную страницу
   });
 }
 
+// Остальной код остаётся без изменений
 function displayOrderDetails(order) {
   // Создаем затемненный фон
   const overlay = document.createElement('div');
@@ -94,15 +194,15 @@ function displayOrderDetails(order) {
       const quantity = itemCount[itemId];
       const totalPrice = item.price * quantity; // Общая цена для товара
       return `
-                <div>
-                    <h6>${item.description}</h6>
-                    <p style="font-size:15px">Количество: ${quantity}</p>
-                    <p style="font-size:15px">Цена за единицу: ${item.price} тг</p>
-                    <p style="font-size:15px">Общая цена: ${totalPrice} тг</p>
-                    <img src="${item.imageUrl}" alt="${item.description}" style="width: auto; height: 130px;">
-                    <hr>
-                </div>
-            `;
+        <div>
+          <h6>${item.description}</h6>
+          <p style="font-size:15px">Количество: ${quantity}</p>
+          <p style="font-size:15px">Цена за единицу: ${item.price} тг</p>
+          <p style="font-size:15px">Общая цена: ${totalPrice} тг</p>
+          <img src="${item.imageUrl}" alt="${item.description}" style="width: auto; height: 130px;">
+          <hr>
+        </div>
+      `;
     }
     return '';
   }).join('');
@@ -114,11 +214,11 @@ function displayOrderDetails(order) {
   }, 0);
 
   content.innerHTML = `
-        <h3>Состав заказа</h3>
-        ${itemsInfo}
-        <p>Дата заказа: ${order.date}</p>
-        <h4>Общая стоимость заказа: ${totalOrderPrice} тг</h4>
-    `;
+    <h3>Состав заказа</h3>
+    ${itemsInfo}
+    <p>Дата заказа: ${order.date}</p>
+    <h4>Общая стоимость заказа: ${totalOrderPrice} тг</h4>
+  `;
 
   // Создаем кнопку для закрытия
   const closeButton = document.createElement('button');
