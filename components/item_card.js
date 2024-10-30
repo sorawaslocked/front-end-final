@@ -15,12 +15,10 @@ function createItemCard(item) {
   img.style.objectFit = "cover"; // Ensures image fills the container without distortion
   cardDiv.appendChild(img);
 
-  let isLiked;
+  let isLiked = false;
   let likedForUser;
 
-  if (USER_LOGGED_IN === 0) {
-    isLiked = false;
-  } else {
+  if (USER_LOGGED_IN !== 0) {
     likedForUser = DB.liked_items.find(user => user.id === USER_LOGGED_IN);
     isLiked = likedForUser.likedItems.includes(item.id);
   }

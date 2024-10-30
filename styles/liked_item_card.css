@@ -1,0 +1,21 @@
+/* Fixed image size */
+.item-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Card fixed size */
+.card {
+  width: 200px;
+  height: 284px;
+}
+
+/* Limit description to two lines with ellipsis */
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
