@@ -3,4 +3,5 @@ const fakeDb = {
   items: ITEMS_FROM_DB,
   orders: ORDERS_FROM_DB,
   liked_items: LIKED_ITEMS,
+  cart_items: CART_ITEMS,
 };

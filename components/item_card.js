@@ -119,17 +119,36 @@ function createItemCard(item) {
   quantityGroup.className = "input-group quantity-group";
 
   // Initial count set to 0
+
   let count = 0;
+  let cartForUser;
+
+  if (USER_LOGGED_IN !== 0) {
+    cartForUser = DB.cart_items.find(user => user.id === USER_LOGGED_IN);
+    count = cartForUser.cart.filter(i => i === item.id).length;
+  }
 
   const minusButton = document.createElement("button");
   minusButton.className = "btn btn-outline-primary btn-sm";
   minusButton.type = "button";
   minusButton.textContent = "-";
   minusButton.onclick = function() {
-      if (count > 0) {
-        count -= item.quantity.count;
-        quantityDisplay.innerHTML = `<div style="font-size: 1.2rem;">${count}</div><div style="font-size: 0.9rem;">${quantityEnding}</div>`;
+    if (count > 0) {
+      count -= item.quantity.count;
+      quantityDisplay.innerHTML = `<div style="font-size: 1.2rem;">${count}</div><div style="font-size: 0.9rem;">${quantityEnding}</div>`;
+
+      if (USER_LOGGED_IN === 0) {
+        return;
       }
+
+      const index = cartForUser.cart.findIndex(i => i === item.id);
+
+      if (index !== -1) {
+        cartForUser.cart.splice(index, 1);
+      }
+
+      localStorage.setItem('db', JSON.stringify(DB));
+    }
   };
   quantityGroup.appendChild(minusButton);
 
@@ -150,6 +169,14 @@ function createItemCard(item) {
   plusButton.onclick = function() {
     count += item.quantity.count;
     quantityDisplay.innerHTML = `<div style="font-size: 1.2rem;">${count}</div><div style="font-size: 0.9rem;">${quantityEnding}</div>`;
+
+    if (USER_LOGGED_IN === 0) {
+      return;
+    }
+
+    cartForUser.cart.push(item.id);
+
+    localStorage.setItem('db', JSON.stringify(DB));
   };
 
   quantityGroup.appendChild(plusButton);
