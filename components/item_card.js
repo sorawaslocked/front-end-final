@@ -15,6 +15,47 @@ function createItemCard(item) {
   img.style.objectFit = "cover"; // Ensures image fills the container without distortion
   cardDiv.appendChild(img);
 
+  let isLiked;
+  let likedForUser;
+
+  if (USER_LOGGED_IN === 0) {
+    isLiked = false;
+  } else {
+    likedForUser = DB.liked_items.find(user => user.id === USER_LOGGED_IN);
+    isLiked = likedForUser.likedItems.includes(item.id);
+  }
+
+  const likeButton = document.createElement("button");
+  likeButton.className = "btn btn-sm position-absolute top-0 end-0 m-2";
+  likeButton.style.backgroundColor = "transparent"; // Transparent background
+  likeButton.style.border = "none"; // No border for cleaner look
+  likeButton.style.color = isLiked ? "red" : "gray"; // Red if liked, gray if unliked
+  likeButton.style.fontSize = "1.5rem"; // Adjust icon size
+  likeButton.className = "btn btn-light btn-sm position-absolute top-0 end-0 m-2";
+  likeButton.innerHTML = `<i class="bi bi-heart"></i>`; // Bootstrap heart icon
+  likeButton.style.fontSize = "1.5rem"; // Adjust icon size
+  likeButton.innerHTML = `<i class="bi ${isLiked ? 'bi-heart-fill' : 'bi-heart'}"></i>`;
+  likeButton.onclick = function() {
+    isLiked = !isLiked; // Toggle the isLiked state
+
+    // Update the button icon and color based on the new state
+    likeButton.innerHTML = `<i class="bi ${isLiked ? 'bi-heart-fill' : 'bi-heart'}"></i>`;
+    likeButton.style.color = isLiked ? "red" : "gray";
+
+    if (likedForUser == null) {
+      return;
+    }
+
+    if (isLiked) {
+      likedForUser.likedItems.push(item.id);
+      localStorage.setItem('db', JSON.stringify(DB));
+    } else {
+      likedForUser.likedItems = likedForUser.likedItems.filter(id => id !== item.id);
+      localStorage.setItem('db', JSON.stringify(DB));
+    }
+  };
+  cardDiv.appendChild(likeButton);
+
   // Create card body
   const cardBody = document.createElement("div");
   cardBody.className = "card-body d-flex flex-column";
