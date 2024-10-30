@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Создаем нового пользователя
             const newUser = {
-                id: USERS_FROM_DB.length + 1,
+                id: DB.users.length + 1,
                 name,
                 email,
                 phone,
@@ -61,9 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             // Добавляем пользователя в массив и обновляем localStorage
-            USERS_FROM_DB.push(newUser); 
-            const updatedDb = { users: { data: USERS_FROM_DB } };
-            localStorage.setItem('db', JSON.stringify(updatedDb));
+            DB.users.push(newUser);
+            DB.cart_items.push({
+                id: newUser.id,
+                cart: []
+            });
+            DB.liked_items.push({
+                id: newUser.id,
+                likedItems: []
+            });
+            localStorage.setItem('db', JSON.stringify(DB));
             
             // Устанавливаем нового пользователя как текущего и перенаправляем на профиль
             sessionStorage.setItem('loggedId', newUser.id);

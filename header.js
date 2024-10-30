@@ -37,16 +37,16 @@ categoryMenu.setAttribute('aria-labelledby', 'categoryDropdownMenuLink');
 
 // Список категорий
 const categories = [
-  { name: 'Фрукты, ягоды', link: '../category.html?category=fruits' },
-  { name: 'Овощи, зелень', link: '../category.html?category=veggies' },
-  { name: 'Молочные продукты, яйца', link: '../category.html?category=milk' },
-  { name: 'Мясо, птица', link: '../category.html?category=meat' },
-  { name: 'Рыба, морепродукты', link: '../category.html?category=fish' },
-  { name: 'Крупы, макароны', link: '../category.html?category=grain' },
-  { name: 'Хлеб, выпечка', link: '../category.html?category=bread' },
-  { name: 'Конфеты, печенье, снеки', link: '../category.html?category=snacks' },
-  { name: 'Соки, напитки', link: '../category.html?category=drinks' },
-  { name: 'Чай, кофе', link: '../category.html?category=tea' }
+  { name: 'Фрукты, ягоды', link: 'category.html?category=fruits' },
+  { name: 'Овощи, зелень', link: 'category.html?category=veggies' },
+  { name: 'Молочные продукты, яйца', link: 'category.html?category=milk' },
+  { name: 'Мясо, птица', link: 'category.html?category=meat' },
+  { name: 'Рыба, морепродукты', link: 'category.html?category=fish' },
+  { name: 'Крупы, макароны', link: 'category.html?category=grain' },
+  { name: 'Хлеб, выпечка', link: 'category.html?category=bread' },
+  { name: 'Конфеты, печенье, снеки', link: 'category.html?category=snacks' },
+  { name: 'Соки, напитки', link: 'category.html?category=drinks' },
+  { name: 'Чай, кофе', link: 'category.html?category=tea' }
 ];
 
 categories.forEach(category => {
@@ -106,57 +106,59 @@ navList.appendChild(likedItem);
 
 // Корзина
 const cartItem = document.createElement('li');
-cartItem.className = 'nav-item';
-const cartDropdown = document.createElement('div');
-cartDropdown.className = 'dropdown';
 
 const cartButton = document.createElement('button');
 cartButton.className = 'btn btn-success border-2 rounded-4 dropdown-toggle';
 cartButton.type = 'button';
-cartButton.setAttribute('data-bs-toggle', 'dropdown');
-cartButton.setAttribute('aria-expanded', 'false');
 cartButton.innerHTML = '<i class="bi bi-basket me-2"></i><span class="button-text">Корзина</span>';
 
-const cartMenu = document.createElement('div');
-cartMenu.className = 'dropdown-menu dropdown-cart';
+const cartLink = document.createElement('a');
+cartLink.className = 'nav-link';
+cartLink.href = 'cart.html';
 
-const cartItems = [
-  { name: 'Актуаль Персик Маракуйя 1л', quantity: '10шт' },
-  { name: 'Lays Чили Лайм 200г', quantity: '5шт' },
-  { name: 'Ташкентские Лимоны', quantity: '2шт' }
-];
+cartLink.appendChild(cartButton);
+cartItem.appendChild(cartLink);
 
-const cartTable = document.createElement('table');
-cartTable.className = 'table-sm table-hover';
+// const cartMenu = document.createElement('div');
+// cartMenu.className = 'dropdown-menu dropdown-cart';
 
-cartItems.forEach(item => {
-  const row = document.createElement('tr');
-  const nameCell = document.createElement('td');
-  nameCell.className = 'text-short';
-  nameCell.textContent = item.name;
-  const quantityCell = document.createElement('td');
-  quantityCell.textContent = item.quantity;
-  row.appendChild(nameCell);
-  row.appendChild(quantityCell);
-  cartTable.appendChild(row);
-});
+// const cartItems = [
+//   { name: 'Актуаль Персик Маракуйя 1л', quantity: '10шт' },
+//   { name: 'Lays Чили Лайм 200г', quantity: '5шт' },
+//   { name: 'Ташкентские Лимоны', quantity: '2шт' }
+// ];
+//
+// const cartTable = document.createElement('table');
+// cartTable.className = 'table-sm table-hover';
+//
+// cartItems.forEach(item => {
+//   const row = document.createElement('tr');
+//   const nameCell = document.createElement('td');
+//   nameCell.className = 'text-short';
+//   nameCell.textContent = item.name;
+//   const quantityCell = document.createElement('td');
+//   quantityCell.textContent = item.quantity;
+//   row.appendChild(nameCell);
+//   row.appendChild(quantityCell);
+//   cartTable.appendChild(row);
+// });
 
-cartMenu.appendChild(cartTable);
-const cartDivider = document.createElement('hr');
-cartDivider.className = 'dropdown-divider';
-cartMenu.appendChild(cartDivider);
+// cartMenu.appendChild(cartTable);
+// const cartDivider = document.createElement('hr');
+// cartDivider.className = 'dropdown-divider';
+// cartMenu.appendChild(cartDivider);
 
-const viewCartLink = document.createElement('a');
-viewCartLink.href = 'cart.html';
-const viewCartButton = document.createElement('button');
-viewCartButton.className = 'btn btn-success border-2';
-viewCartButton.textContent = 'Вся корзина';
-viewCartLink.appendChild(viewCartButton);
-cartMenu.appendChild(viewCartLink);
-
-cartDropdown.appendChild(cartButton);
-cartDropdown.appendChild(cartMenu);
-cartItem.appendChild(cartDropdown);
+// const viewCartLink = document.createElement('a');
+// viewCartLink.href = 'cart.html';
+// const viewCartButton = document.createElement('button');
+// viewCartButton.className = 'btn btn-success border-2';
+// viewCartButton.textContent = 'Вся корзина';
+// viewCartLink.appendChild(viewCartButton);
+// cartMenu.appendChild(viewCartLink);
+//
+// cartDropdown.appendChild(cartButton);
+// cartDropdown.appendChild(cartMenu);
+// cartItem.appendChild(cartDropdown);
 navList.appendChild(cartItem);
 
 // Профиль
@@ -199,30 +201,36 @@ smallLikedLink.appendChild(smallLikedButton);
 smallHeaderActions.appendChild(smallLikedLink);
 
 // Маленький Dropdown для корзины
-const smallCartDropdown = document.createElement('div');
-smallCartDropdown.className = 'dropdown';
+// const smallCartDropdown = document.createElement('div');
+// smallCartDropdown.className = 'dropdown';
 const smallCartButton = document.createElement('button');
 smallCartButton.className = 'btn btn-success border-2 rounded-4 dropdown-toggle';
 smallCartButton.type = 'button';
-smallCartButton.setAttribute('data-bs-toggle', 'dropdown');
-smallCartButton.setAttribute('aria-expanded', 'false');
+// smallCartButton.setAttribute('data-bs-toggle', 'dropdown');
+// smallCartButton.setAttribute('aria-expanded', 'false');
 smallCartButton.innerHTML = '<i class="bi bi-basket"></i>';
 
-const smallCartMenu = document.createElement('div');
-smallCartMenu.className = 'dropdown-menu dropdown-cart';
-categories.forEach(category => {
-  const li = document.createElement('li');
-  const a = document.createElement('a');
-  a.className = 'dropdown-item';
-  a.href = category.link;
-  a.textContent = category.name;
-  li.appendChild(a);
-  smallCartMenu.appendChild(li);
-});
+const smallCartLink = document.createElement('a');
+smallCartLink.className = 'nav-link';
+smallCartLink.href = 'cart.html';
 
-smallCartDropdown.appendChild(smallCartButton);
-smallCartDropdown.appendChild(smallCartMenu);
-smallHeaderActions.appendChild(smallCartDropdown);
+smallCartLink.appendChild(smallCartButton);
+
+// const smallCartMenu = document.createElement('div');
+// smallCartMenu.className = 'dropdown-menu dropdown-cart';
+// categories.forEach(category => {
+//   const li = document.createElement('li');
+//   const a = document.createElement('a');
+//   a.className = 'dropdown-item';
+//   a.href = category.link;
+//   a.textContent = category.name;
+//   li.appendChild(a);
+//   smallCartMenu.appendChild(li);
+// });
+//
+// smallCartDropdown.appendChild(smallCartButton);
+// smallCartDropdown.appendChild(smallCartMenu);
+smallHeaderActions.appendChild(smallCartLink);
 
 // Кнопка профиля для мобильных устройств
 const mobileProfileButton = document.createElement('button');
