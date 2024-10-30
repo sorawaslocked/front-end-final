@@ -65,12 +65,14 @@ headerActions.appendChild(categoryDropdown);
 
 // Форма поиска
 const searchForm = document.createElement('form');
+searchForm.action = "search.html"
 searchForm.className = 'd-flex mx-3';
 searchForm.setAttribute('role', 'search');
 
 const searchInput = document.createElement('input');
 searchInput.id = 'search-form-input';
 searchInput.className = 'form-control me-2 border-black border-2';
+searchInput.name = "search";
 searchInput.type = 'search';
 searchInput.placeholder = 'Поиск';
 searchInput.setAttribute('aria-label', 'Search');
@@ -279,6 +281,7 @@ showOnSmall2.appendChild(smallCategoryDropdown);
 
 // Форма поиска для маленьких экранов
 const smallSearchForm = document.createElement('form');
+smallSearchForm.action = "search.html"
 smallSearchForm.className = 'd-flex';
 smallSearchForm.setAttribute('role', 'search');
 
@@ -286,6 +289,7 @@ const smallSearchInput = document.createElement('input');
 smallSearchInput.id = 'search-input';
 smallSearchInput.className = 'form-control me-2 border-black border-2';
 smallSearchInput.type = 'search';
+smallSearchInput.name = "search";
 smallSearchInput.placeholder = 'Поиск';
 smallSearchInput.setAttribute('aria-label', 'Search');
 
