@@ -55,6 +55,9 @@ footer {
   #show-on-small {
     display: flex !important; /* Показать версию для маленьких экранов */
   }
+  #show-on-small-2 {
+    display: flex !important; /* Показать версию для маленьких экранов */
+  }
   #show-on-large {
     display: none !important; /* Скрыть элементы для больших экранов */
   }
@@ -69,6 +72,9 @@ footer {
     display: flex !important; /* Показать элементы для больших экранов */
   }
   #show-on-small {
+    display: none !important; /* Скрыть элементы для маленьких экранов */
+  }
+  #show-on-small-2 {
     display: none !important; /* Скрыть элементы для маленьких экранов */
   }
   .btn-success{
