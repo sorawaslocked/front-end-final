@@ -84,49 +84,25 @@ document.addEventListener('DOMContentLoaded', function() {
   promotionsCarousel.addEventListener('mouseup', function(event) {
     isDragging = false; // Сбрасываем состояние при отпускании кнопки мыши
   });
+  const newItemsGrid = document.getElementById('newItemsGrid');
+  const salesGrid = document.getElementById('salesGrid');
 
   // Функция отображения товаров новинок
-  const newItemsGrid = document.getElementById('newItemsGrid');
   function displayNewItems(items) {
     items.forEach(item => {
-      const itemCard = createItemCard(item);
+      const itemCard = createItemCard(item); // Создаем карточку через createItemCard из item_card.js
       newItemsGrid.appendChild(itemCard);
     });
   }
 
   // Функция отображения товаров со скидкой
-  const salesGrid = document.getElementById('salesGrid');
   function displayDiscountedItems(items) {
     items.forEach(item => {
       if (item.discountPercent > 0) {
-        const itemCard = createItemCard(item, true);
+        const itemCard = createItemCard(item); // Создаем карточку через createItemCard из item_card.js
         salesGrid.appendChild(itemCard);
       }
     });
-  }
-
-  // Создание карточки товара
-  function createItemCard(item, isDiscounted = false) {
-    const col = document.createElement('div');
-    col.className = 'col';
-    
-    col.innerHTML = `
-      <div class="card h-100">
-        <img class="card-img-top product-img" src="${item.imageUrl}" alt="${item.description}">
-        <div class="card-body d-flex flex-column">
-          <p class="card-title product-card-title mb-3">${item.description}</p>
-          <div class="d-flex flex-row align-items-center mt-auto">
-            <div class="d-flex flex-column">
-              ${isDiscounted ? `<h6 class="text-decoration-line-through m-0">${item.price} ₸/шт</h6>` : ''}
-              <h6 class="text-success m-0">${isDiscounted ? (item.price * (1 - item.discountPercent / 100)).toFixed(0) : item.price} ₸/шт</h6>
-            </div>
-            <button class="btn btn-success ms-auto"><i class="bi bi-plus-square"></i></button>
-          </div>
-        </div>
-      </div>
-    `;
-
-    return col;
   }
 
   // Добавление новинок и скидок

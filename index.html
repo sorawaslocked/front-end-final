@@ -13,13 +13,14 @@
   <script src="repository/cart_items_data.js"></script>
   <script src="repository/fakeDb.js"></script>
   <script src="main.js"></script>
+  <link rel="stylesheet" href="styles/item_card.css">
 </head>
 <body>
   <div id="header-container"></div>
-  <div class="container-xxl mt-5 px-xl-5">
     <main>
+      <div class="container my-5">
       <!-- Акции -->
-      <div id="promotions" class="container px-5 mb-5">
+      <div id="promotions" class="px-5 mb-5">
         <h2 class="mb-3">Акции</h2>
         <div id="promotionsCarousel" class="carousel-container">
           <div class="carousel-inner">
@@ -29,22 +30,21 @@
       </div>
 
       <!-- Новинки -->
-      <div id="newItems" class="container px-5 mb-5">
+      <div id="newItems" class="px-5 mb-5">
         <h2 class="mb-3">Новинки</h2>
-        <div id="newItemsGrid" class="row row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3 py-3">
+        <div id="newItemsGrid" class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
           <!-- Карточки товаров новинок будут добавлены через JavaScript -->
         </div>
       </div>
       
       <!-- Скидки -->
-      <div id="sales" class="container px-5 mb-5">
+      <div id="sales" class="px-5 mb-5">
         <h2 class="mb-3">Скидки</h2>
-        <div id="salesGrid" class="row row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3 py-3">
+        <div id="salesGrid" class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
           <!-- Карточки товаров со скидкой будут добавлены через JavaScript -->
         </div>
       </div>
     </main>
-  </div>
   
   <div id="footer-container"></div>
   
@@ -52,6 +52,7 @@
   <script src="login_register.js"></script>
   <script src="categories_button.js"></script>
   <script src="header.js"></script>
+  <script src="components/item_card.js"></script>
   <script src="promotion_and_carousel.js"></script>
 </body>
 </html>

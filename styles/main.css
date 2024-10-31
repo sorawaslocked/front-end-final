@@ -15,10 +15,6 @@ a {
   width: 100%;
 }
 
-.carousel-container {
-  display: flex;
-  align-items: center; /* Центрирует кнопки по вертикали */
-}
 
 .product-img {
   width: 100%;
