@@ -94,15 +94,12 @@ if (currentUser) {
       userPhone.innerText = editUserPhone.value;
       userAddress.innerText = editUserAddress.value;
 
-      // Сохраняем данные в локальное хранилище
-      const userData = {
-        id: currentUser.id, // Сохраняем ID пользователя
-        name: userName.innerText,
-        email: userEmail.innerText,
-        phone: userPhone.innerText,
-        address: userAddress.innerText
-      };
-      localStorage.setItem(`userData_${currentUser.id}`, JSON.stringify(userData)); // Используем ID пользователя как ключ
+      currentUser.name = userName.innerText;
+      currentUser.email = userEmail.innerText;
+      currentUser.phone = userPhone.innerText;
+      currentUser.address = userAddress.innerText;
+
+      localStorage.setItem('db', JSON.stringify(DB));
 
       userName.style.display = 'block';
       userEmail.style.display = 'block';
@@ -123,29 +120,16 @@ if (currentUser) {
 
 // Функция для загрузки данных пользователя из локального хранилища
 function loadUserData(currentUser) {
-  const storedUserData = JSON.parse(localStorage.getItem(`userData_${currentUser.id}`)); // Используем ID пользователя как ключ
-  if (storedUserData) {
-    document.getElementById("user-name").innerText = storedUserData.name || currentUser.name || 'Не указано';
-    document.getElementById("user-email").innerText = storedUserData.email || currentUser.email || 'Не указано';
-    document.getElementById("user-phone").innerText = storedUserData.phone || currentUser.phone || 'Не указано';
-    document.getElementById("user-address").innerText = storedUserData.address || currentUser.address || 'Не указано';
-  } else {
-    document.getElementById("user-name").innerText = currentUser.name || 'Не указано';
-    document.getElementById("user-email").innerText = currentUser.email || 'Не указано';
-    document.getElementById("user-phone").innerText = currentUser.phone || 'Не указано';
-    document.getElementById("user-address").innerText = currentUser.address || 'Не указано';
-  }
+  document.getElementById("user-name").innerText = currentUser.name || 'Не указано';
+  document.getElementById("user-email").innerText = currentUser.email || 'Не указано';
+  document.getElementById("user-phone").innerText = currentUser.phone || 'Не указано';
+  document.getElementById("user-address").innerText = currentUser.address || 'Не указано';
 }
 
 const logoutButton = document.querySelector(".btn.btn-danger");
 if (logoutButton) {
   logoutButton.addEventListener("click", () => {
-    // Удаляем данные из локального хранилища при выходе
-    const storedUserData = JSON.parse(localStorage.getItem(`userData_${currentUser.id}`));
-    if (storedUserData) {
-      localStorage.removeItem(`userData_${currentUser.id}`); // Удаляем данные пользователя из локального хранилища
-    }
-    
+
     sessionStorage.removeItem('loggedId'); // Удаляем ID из sessionStorage
     window.location.href = "index.html"; // Перенаправляем на главную страницу
   });
