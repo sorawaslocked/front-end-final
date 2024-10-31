@@ -1,4 +1,4 @@
-function createCartItem(item, count) {
+function createCartItem(item, count, totalItemPriceValue, totalPriceValue, deliveryPrice) {
   // Create the list item container
   const listItem = document.createElement("li");
   listItem.className = "list-group-item d-flex justify-content-between align-items-center";
@@ -79,6 +79,14 @@ function createCartItem(item, count) {
         cartForUser.cart.splice(index, 1);
       }
 
+      const totalItemPriceValueString = totalItemPriceValue.textContent;
+      const totalItemPriceParts = totalItemPriceValueString.split(" ");
+      const oldTotalItemPrice = Number.parseInt(totalItemPriceParts[0]);
+      const newTotalItemPrice = oldTotalItemPrice - item.price;
+
+      totalItemPriceValue.textContent = `${newTotalItemPrice} ₸`;
+      totalPriceValue.textContent = `${newTotalItemPrice + deliveryPrice} ₸`;
+
       localStorage.setItem('db', JSON.stringify(DB));
     }
   };
@@ -101,6 +109,14 @@ function createCartItem(item, count) {
     if (USER_LOGGED_IN === 0) {
       return;
     }
+
+    const totalItemPriceValueString = totalItemPriceValue.textContent;
+    const totalItemPriceParts = totalItemPriceValueString.split(" ");
+    const oldTotalItemPrice = Number.parseInt(totalItemPriceParts[0]);
+    const newTotalItemPrice = oldTotalItemPrice + item.price;
+
+    totalItemPriceValue.textContent = `${newTotalItemPrice} ₸`;
+    totalPriceValue.textContent = `${newTotalItemPrice + deliveryPrice} ₸`;
 
     cartForUser.cart.push(item.id);
 
