@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Главная</title>
+  <link rel="stylesheet" href="styles.css">
   <script src="gen-metadata.js"></script>
   <script src="repository/users_data.js"></script>
   <script src="repository/items_data.js"></script>
@@ -15,12 +16,42 @@
 </head>
 <body>
   <div id="header-container"></div>
-  <main></main><!--если не добавить футер и хэдер приклеются друг к другу и будут вместе висеть
-  надо будет уберете или дополните-->
+  <div class="container-xxl mt-5 px-xl-5">
+    <main>
+      <!-- Акции -->
+      <div id="promotions" class="container px-5 mb-5">
+        <h2 class="mb-3">Акции</h2>
+        <div id="promotionsCarousel" class="carousel-container">
+          <div class="carousel-inner">
+            <!-- Слайды карусели будут добавлены через JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Новинки -->
+      <div id="newItems" class="container px-5 mb-5">
+        <h2 class="mb-3">Новинки</h2>
+        <div id="newItemsGrid" class="row row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3 py-3">
+          <!-- Карточки товаров новинок будут добавлены через JavaScript -->
+        </div>
+      </div>
+      
+      <!-- Скидки -->
+      <div id="sales" class="container px-5 mb-5">
+        <h2 class="mb-3">Скидки</h2>
+        <div id="salesGrid" class="row row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3 py-3">
+          <!-- Карточки товаров со скидкой будут добавлены через JavaScript -->
+        </div>
+      </div>
+    </main>
+  </div>
+  
   <div id="footer-container"></div>
+  
   <script src="components/footer.js"></script>
   <script src="login_register.js"></script>
   <script src="categories_button.js"></script>
   <script src="header.js"></script>
+  <script src="promotion_and_carousel.js"></script>
 </body>
 </html>
