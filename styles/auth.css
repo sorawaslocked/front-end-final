@@ -19,3 +19,19 @@
 #login_btn:hover {
   background-color: #28a745;
 }
+
+.input-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute; /* Make sure it is positioned absolutely */
+  right: 10px; /* Distance from the right side */
+  font-size: 12px;
+  color: gray;
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust vertical positioning */
+  pointer-events: auto; /* Ensure it is clickable */
+}
+
+

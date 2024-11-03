@@ -34,11 +34,21 @@
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Пароль</label>
-              <input type="password" class="form-control" id="password" placeholder="Введите ваш пароль" required>
+              <div class="input-container position-relative">
+                <input type="password" class="form-control" id="password" placeholder="Введите ваш пароль" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('password')">Show</span>
+              </div>
             </div>
             <div class="mb-3">
               <label for="confirm-password" class="form-label">Подтвердите пароль</label>
-              <input type="password" class="form-control" id="confirm-password" placeholder="Подтвердите ваш пароль" required>
+              <div class="input-container position-relative">
+                <input type="password" class="form-control" id="confirm-password" placeholder="Подтвердите ваш пароль" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('confirm-password')">Show</span>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="adress" class="form-label">Адрес</label>
+              <input type="text" class="form-control" id="adress" placeholder="Введите адрес" required>
             </div>
             <button id="register_btn" type="submit" class="btn btn-success w-100">Зарегистрироваться</button>
           </form>
