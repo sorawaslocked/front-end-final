@@ -22,19 +22,30 @@ if (currentUser) {
     adminPanelContainer.appendChild(adminButton);
   }
 
-  // Получаем заказы текущего пользователя
+  // Получаем заказы текущего пользователя из базы данных
   const userOrders = ORDERS_FROM_DB.filter(order => order.userId === currentUser.id);
 
-  // Сортируем заказы по дате (или уникальному номеру) в порядке убывания
-  userOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
+  // Загружаем заказы из локального хранилища
+  const existingOrders = JSON.parse(localStorage.getItem(`userOrders-${USER_LOGGED_IN}`)) || [];
+
+  // Смешиваем заказы из БД и локального хранилища
+  const allUserOrders = [...userOrders, ...existingOrders].filter((order, index, self) =>
+    index === self.findIndex(o => o.uniqueNum === order.uniqueNum)
+  );
+
+  // Сортируем все заказы по дате в порядке убывания
+  allUserOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  // Ограничиваем количество отображаемых заказов до трех последних
+  const recentOrders = allUserOrders.slice(0, 3);
 
   // Получаем все элементы с классом order-number
   const orderElements = document.querySelectorAll(".order-number");
 
   // Заполняем элементы последними заказами
   orderElements.forEach((orderElement, index) => {
-    if (index < userOrders.length) {
-      const order = userOrders[index];
+    if (index < recentOrders.length) {
+      const order = recentOrders[index];
       orderElement.innerText = order.uniqueNum;
 
       // Добавляем обработчик события для кнопки "Показать"
@@ -48,10 +59,10 @@ if (currentUser) {
   });
 
   // Удаляем лишние строки, если меньше 3 заказов
-  if (userOrders.length < 3) {
+  if (recentOrders.length < 3) {
     const orderList = document.getElementById("order-list");
     const orderItems = orderList.querySelectorAll(".order-item");
-    for (let i = userOrders.length; i < orderItems.length; i++) {
+    for (let i = recentOrders.length; i < orderItems.length; i++) {
       orderList.removeChild(orderItems[i]);
     }
   }
@@ -129,7 +140,6 @@ function loadUserData(currentUser) {
 const logoutButton = document.querySelector(".btn.btn-danger");
 if (logoutButton) {
   logoutButton.addEventListener("click", () => {
-
     sessionStorage.removeItem('loggedId'); // Удаляем ID из sessionStorage
     window.location.href = "index.html"; // Перенаправляем на главную страницу
   });
@@ -198,38 +208,28 @@ function displayOrderDetails(order) {
   }, 0);
 
   content.innerHTML = `
-    <h3>Состав заказа</h3>
+    <h4>Детали заказа</h4>
+    <p>Номер заказа: ${order.uniqueNum}</p>
+    <p>Дата: ${new Date(order.date).toLocaleString()}</p>
+    <h5>Содержимое заказа:</h5>
     ${itemsInfo}
-    <p>Дата заказа: ${order.date}</p>
-    <h4>Общая стоимость заказа: ${totalOrderPrice} тг</h4>
+    <strong>Общая стоимость: ${totalOrderPrice} тг</strong>
+    <button id="close-modal" class="btn btn-secondary" style="margin-top: 20px;">Закрыть</button>
   `;
 
-  // Создаем кнопку для закрытия
-  const closeButton = document.createElement('button');
-  closeButton.innerText = 'Закрыть';
-  closeButton.style.background = '#007bff';
-  closeButton.style.color = 'white';
-  closeButton.style.border = 'none';
-  closeButton.style.padding = '8px 12px';
-  closeButton.style.borderRadius = '4px';
-  closeButton.style.cursor = 'pointer';
-  closeButton.style.float = 'right';
-
-  // Закрытие окна при нажатии на кнопку "Закрыть"
-  closeButton.addEventListener('click', function () {
-    document.body.removeChild(overlay);
-  });
-
-  // Закрытие окна при нажатии на затемнённую область
-  overlay.addEventListener('click', function (event) {
-    if (event.target === overlay) {
-      document.body.removeChild(overlay);
-    }
-  });
-
-  // Добавляем элементы в модальное окно
-  modalWindow.appendChild(closeButton);
   modalWindow.appendChild(content);
   overlay.appendChild(modalWindow);
   document.body.appendChild(overlay);
+
+  // Закрытие окна по кнопке
+  document.getElementById('close-modal').addEventListener('click', () => {
+    document.body.removeChild(overlay);
+  });
+
+  // Закрытие окна при клике вне его
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      document.body.removeChild(overlay);
+    }
+  });
 }
