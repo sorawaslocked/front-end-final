@@ -8,40 +8,57 @@ if (currentUser) {
 
   // Проверяем, является ли пользователь администратором
   if (currentUser.id === 1) {
+    // Создаем кнопку для перехода в панель администратора
     const adminButton = document.createElement('button');
     adminButton.innerText = "Перейти в панель администратора";
-    adminButton.className = "btn btn-warning";
-    adminButton.style.marginTop = '20px';
+    adminButton.className = "btn btn-warning"; // Добавляем стили для кнопки
+    adminButton.style.marginTop = '20px'; // Отступ сверху
     adminButton.addEventListener("click", () => {
-      window.location.href = "admin_panel.html";
+      window.location.href = "admin_panel.html"; // Укажите путь к странице панели администратора
     });
+
+    // Добавляем кнопку в контейнер
     const adminPanelContainer = document.getElementById("admin-panel-container");
     adminPanelContainer.appendChild(adminButton);
   }
 
-  // Загружаем заказы текущего пользователя из базы данных
+  // Получаем заказы текущего пользователя из базы данных
   const userOrders = ORDERS_FROM_DB.filter(order => order.userId === currentUser.id);
+
+  // Загружаем заказы из локального хранилища
   const existingOrders = JSON.parse(localStorage.getItem(`userOrders-${USER_LOGGED_IN}`)) || [];
+
+  // Смешиваем заказы из БД и локального хранилища
   const allUserOrders = [...userOrders, ...existingOrders].filter((order, index, self) =>
     index === self.findIndex(o => o.uniqueNum === order.uniqueNum)
   );
+
+  // Сортируем все заказы по дате в порядке убывания
   allUserOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  // Ограничиваем количество отображаемых заказов до трех последних
   const recentOrders = allUserOrders.slice(0, 3);
 
+  // Получаем все элементы с классом order-number
   const orderElements = document.querySelectorAll(".order-number");
+
+  // Заполняем элементы последними заказами
   orderElements.forEach((orderElement, index) => {
     if (index < recentOrders.length) {
       const order = recentOrders[index];
       orderElement.innerText = order.uniqueNum;
+
+      // Добавляем обработчик события для кнопки "Показать"
       const showButton = orderElement.parentElement.querySelector(".btn.btn-primary");
       showButton.addEventListener("click", () => {
         displayOrderDetails(order);
       });
     } else {
-      orderElement.innerText = 'Нет заказов';
+      orderElement.innerText = 'Нет заказов'; // Если больше нет заказов
     }
   });
 
+  // Удаляем лишние строки, если меньше 3 заказов
   if (recentOrders.length < 3) {
     const orderList = document.getElementById("order-list");
     const orderItems = orderList.querySelectorAll(".order-item");
@@ -50,6 +67,7 @@ if (currentUser) {
     }
   }
 
+  // Событие для кнопки редактирования
   const editButton = document.getElementById("edit-button");
   editButton.addEventListener("click", () => {
     const userName = document.getElementById("user-name");
@@ -63,6 +81,7 @@ if (currentUser) {
     const editUserAddress = document.getElementById("edit-user-address");
 
     if (editButton.innerText === "Редактировать") {
+      // Переключение на режим редактирования
       userName.style.display = 'none';
       userEmail.style.display = 'none';
       userPhone.style.display = 'none';
@@ -80,6 +99,30 @@ if (currentUser) {
 
       editButton.innerText = "Сохранить";
     } else {
+      // Валидация данных
+      if (!validateEmail(editUserEmail.value)) {
+        alert("Некорректный email!");
+        return;
+      }
+      if (!validatePhone(editUserPhone.value)) {
+        alert("Некорректный номер телефона! Пример: +77783390355");
+        return;
+      }
+
+      // Сохранение изменений
+      userName.innerText = editUserName.value;
+      userEmail.innerText = editUserEmail.value;
+      userPhone.innerText = editUserPhone.value;
+      userAddress.innerText = editUserAddress.value;
+
+      currentUser.name = userName.innerText;
+      currentUser.email = userEmail.innerText;
+      currentUser.phone = userPhone.innerText;
+      currentUser.address = userAddress.innerText;
+
+      // Сохраняем обновленные данные в локальном хранилище
+      localStorage.setItem('db', JSON.stringify(DB));
+
       userName.style.display = 'block';
       userEmail.style.display = 'block';
       userPhone.style.display = 'block';
@@ -90,65 +133,135 @@ if (currentUser) {
       editUserPhone.style.display = 'none';
       editUserAddress.style.display = 'none';
 
-      userName.innerText = editUserName.value;
-      userEmail.innerText = editUserEmail.value;
-      userPhone.innerText = editUserPhone.value;
-      userAddress.innerText = editUserAddress.value;
-
       editButton.innerText = "Редактировать";
     }
   });
-
-  // Загружаем последние товары
-  loadRecentProducts();
 } else {
-  alert("Не удалось найти данные пользователя.");
+  console.log("Пользователь не найден.");
 }
 
-function loadUserData(user) {
-  const userName = document.getElementById("user-name");
-  const userEmail = document.getElementById("user-email");
-  const userPhone = document.getElementById("user-phone");
-  const userAddress = document.getElementById("user-address");
-
-  userName.innerText = user.name || "Неизвестно";
-  userEmail.innerText = user.email || "Неизвестно";
-  userPhone.innerText = user.phone || "Неизвестно";
-  userAddress.innerText = user.address || "Неизвестно";
+// Функция для загрузки данных пользователя из локального хранилища
+function loadUserData(currentUser) {
+  document.getElementById("user-name").innerText = currentUser.name || 'Не указано';
+  document.getElementById("user-email").innerText = currentUser.email || 'Не указано';
+  document.getElementById("user-phone").innerText = currentUser.phone || 'Не указано';
+  document.getElementById("user-address").innerText = currentUser.address || 'Не указано';
 }
 
-function loadRecentProducts() {
-  const recentProductsList = document.getElementById("recent-products-list");
-  const recentOrders = allUserOrders.slice(0, 3);
-  
-  const productIds = new Set();
-  recentOrders.forEach(order => {
-    order.itemIds.forEach(itemId => {
-      productIds.add(itemId);
-    });
+const logoutButton = document.querySelector(".btn.btn-danger");
+if (logoutButton) {
+  logoutButton.addEventListener("click", () => {
+    sessionStorage.removeItem('loggedId'); // Удаляем ID из sessionStorage
+    window.location.href = "index.html"; // Перенаправляем на главную страницу
+  });
+}
+
+// Валидация email
+function validateEmail(email) {
+  const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  return pattern.test(email);
+}
+
+// Валидация телефона (формат +77783390355)
+function validatePhone(phone) {
+  const pattern = /^\+7\d{10}$/;  // Строгий формат: +7 и 10 цифр
+  return pattern.test(phone);
+}
+
+// Функция для отображения товаров из истории заказов
+function displayOrderDetails(order) {
+  // Создаем затемненный фон
+  const overlay = document.createElement('div');
+  overlay.id = 'modal-overlay';
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.background = 'rgba(0, 0, 0, 0.5)';
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+  overlay.style.zIndex = '1000';
+
+  // Создаем окно
+  const modalWindow = document.createElement('div');
+  modalWindow.style.background = 'white';
+  modalWindow.style.padding = '20px';
+  modalWindow.style.borderRadius = '8px';
+  modalWindow.style.maxWidth = '800px';
+  modalWindow.style.width = '90%';
+  modalWindow.style.maxHeight = '600px'; // Фиксированная высота
+  modalWindow.style.overflowY = 'auto'; // Прокрутка по вертикали
+  modalWindow.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+
+  // Добавляем содержимое
+  const content = document.createElement('div');
+  const itemCount = {};
+
+  // Считаем количество для каждого товара
+  order.itemIds.forEach(itemId => {
+    itemCount[itemId] = (itemCount[itemId] || 0) + 1;
   });
 
-  productIds.forEach(itemId => {
-    const item = ITEMS_FROM_DB.find(i => i.id === itemId);
-    if (item) {
-      const productCard = document.createElement("div");
-      productCard.className = "col-12 col-md-4 col-lg-3 col-xl-2";
+  // Создаем карточки для каждого товара в заказе
+  const itemsInfo = Object.keys(itemCount).map(itemId => {
+    const item = ITEMS_FROM_DB.find(i => i.id === parseInt(itemId));
 
-      productCard.innerHTML = `
-        <div class="card mb-3">
-          <img src="${item.imageUrl}" class="card-img-top" alt="${item.description}">
-          <div class="card-body">
-            <h6 class="card-title">${item.description}</h6>
-            <p class="card-text">Цена: ${item.price} тг</p>
+    if (item) {
+      const quantity = itemCount[itemId];
+      const totalPrice = item.price * quantity; // Общая цена для товара
+      return `
+        <div style="display: flex; flex-direction: column; justify-content: space-between; align-items: center; width: 200px; margin: 10px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; text-align: center;">
+          <img src="${item.imageUrl}" alt="${item.description}" style="width: 100%; height: 150px; object-fit: cover;">
+          <div style="padding: 10px;">
+            <h6 style="font-size: 16px;">${item.description}</h6>
+            <p style="font-size: 14px;">Количество: ${quantity}</p>
+            <p style="font-size: 14px;">Цена за единицу: ${item.price} тг</p>
+            <p style="font-size: 14px;">Общая цена: ${totalPrice} тг</p>
           </div>
         </div>
       `;
+    } else {
+      return `
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; width: 200px; margin: 10px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; text-align: center;">
+          <p style="font-size: 16px; color: red;">Товар не найден</p>
+        </div>
+      `;
+    }
+  }).join('');
 
-      recentProductsList.appendChild(productCard);
+  // Добавляем информацию о заказе
+  const totalOrderPrice = order.itemIds.reduce((total, itemId) => {
+    const item = ITEMS_FROM_DB.find(i => i.id === parseInt(itemId));
+    return total + (item ? item.price : 0);
+  }, 0);
+
+  content.innerHTML = `
+    <h4>Детали заказа</h4>
+    <p>Номер заказа: ${order.uniqueNum}</p>
+    <p>Дата: ${new Date(order.date).toLocaleString()}</p>
+    <h5>Содержимое заказа:</h5>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+      ${itemsInfo}
+    </div>
+    <strong>Общая стоимость: ${totalOrderPrice} тг</strong>
+    <button id="close-modal" class="btn btn-secondary" style="margin-top: 20px;">Закрыть</button>
+  `;
+
+  modalWindow.appendChild(content);
+  overlay.appendChild(modalWindow);
+  document.body.appendChild(overlay);
+
+  // Закрытие окна по кнопке
+  document.getElementById('close-modal').addEventListener('click', () => {
+    document.body.removeChild(overlay);
+  });
+
+  // Закрытие окна при клике вне его
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      document.body.removeChild(overlay);
     }
   });
-}
-
-function displayOrderDetails(order) {
-  alert(`Детали заказа ${order.uniqueNum}: ${JSON.stringify(order)}`);
 }
