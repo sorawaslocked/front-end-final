@@ -252,6 +252,7 @@ confirmPaymentButton.onclick = () => {
   const userCart = DB.cart_items.find(user => user.id === USER_LOGGED_IN);
   if (userCart) {
     userCart.cart = []; // Clear the cart
+    localStorage.setItem('db', JSON.stringify(DB))
   }
 
   alert("Оплата успешно проведена!");
